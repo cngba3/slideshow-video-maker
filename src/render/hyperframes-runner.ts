@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import os from "node:os";
 import { log } from "../utils/logger.js";
 
 export interface RenderArgs {
@@ -6,11 +7,14 @@ export interface RenderArgs {
   outputPath: string;      // path for .mp4
   fps?: number;            // default 30
   quality?: "draft" | "standard" | "high"; // default "standard"
-  workers?: number;        // default 4
+  workers?: number;        // default auto-detected
 }
 
 export async function renderWithHyperframes(args: RenderArgs): Promise<void> {
-  const { compositionDir, outputPath, fps = 30, quality = "standard", workers = 4 } = args;
+  const cpus = os.cpus().length;
+  // Default to min(8, cpus - 2) with a floor of 4 to maximize CPU parallelism without overwhelming system memory
+  const defaultWorkers = Math.max(4, Math.min(8, cpus > 4 ? cpus - 2 : cpus));
+  const { compositionDir, outputPath, fps = 30, quality = "standard", workers = defaultWorkers } = args;
 
   const spawnArgs = [
     "hyperframes",

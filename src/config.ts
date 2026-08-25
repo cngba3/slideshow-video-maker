@@ -1,4 +1,6 @@
-import "dotenv/config";
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config();
 
 export type TtsProvider = "lucylab" | "elevenlabs" | "vbee";
 
@@ -47,6 +49,8 @@ export interface Config {
   ttsConcurrency: number;
   /** Playback speed factor applied to TTS audio via ffmpeg atempo. Default 1.0 (no change). */
   ttsSpeed: number;
+  renderWorkers?: number;
+  renderFps?: number;
 }
 
 function intDefault(name: string, def: number): number {
@@ -125,6 +129,7 @@ export function loadConfig(): Config {
     vbeeEndpoint: process.env.VBEE_ENDPOINT ?? "https://api.vbee.vn/v1/tts",
     vbeeSpeed: floatDefault("VBEE_SPEED", 1.0),
     geminiApiKey: process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY,
+    geminiModel: process.env.GEMINI_MODEL ?? "gemini-3.6-flash",
     groqApiKey: process.env.GROQ_API_KEY,
     tiktok: {
       displayName: process.env.TIKTOK_DISPLAY_NAME ?? "Công nghệ 24h",
@@ -134,5 +139,7 @@ export function loadConfig(): Config {
     },
     ttsConcurrency: intDefault("TTS_CONCURRENCY", 1),
     ttsSpeed: floatDefault("TTS_SPEED", 1.25),
+    renderWorkers: process.env.RENDER_WORKERS ? parseInt(process.env.RENDER_WORKERS, 10) : undefined,
+    renderFps: process.env.RENDER_FPS ? parseInt(process.env.RENDER_FPS, 10) : undefined,
   };
 }
