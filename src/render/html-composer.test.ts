@@ -98,4 +98,18 @@ describe("composeHtml", () => {
     expect(html).toContain('class="bg gradient-news-dark"');
     expect(html).not.toContain("background-image: url");
   });
+
+  it("supports Vietnamese font selections in metadata", () => {
+    const script = JSON.parse(readFileSync("tests/fixtures/sample-script-with-image.json", "utf8")) as Script;
+    script.metadata.font = "montserrat";
+    const sceneAudio = script.scenes.map((s) => ({ id: s.id, durationSec: 5 }));
+    const html = composeHtml({
+      script,
+      sceneAudio,
+      gapSec: 0.3,
+      bgImageRelPath: null,
+      audioRelPath: "voice.mp3",
+    });
+    expect(html).toContain('data-font="montserrat"');
+  });
 });

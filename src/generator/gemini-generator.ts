@@ -135,6 +135,7 @@ QUY TẮC NỘI DUNG & THỜI LƯỢNG:
 - Kịch bản gồm từ 5 đến 8 cảnh (scenes): Cảnh đầu tiên có type="hook", các cảnh giữa có type="body", cảnh cuối cùng có type="outro".
 - Tổng số từ trong tất cả trường voiceText khoảng 150-200 từ (đủ đọc trong ~55-65 giây với tốc độ bình thường).
 - Giọng văn nói tự nhiên, lôi cuốn, tạo sự chú ý ngay từ 3 giây đầu tiên. Không chứa emoji hay ký tự đặc biệt trong voiceText.
+- Tự động chọn 1 font phù hợp nhất với chủ đề trong metadata.font: "be-vietnam" (tin tức/khám phá), "montserrat" (giải trí/xu hướng), "lexend" (số liệu/tài chính), "barlow" (tiêu đề ấn tượng), "jakarta" (công nghệ).
 
 
 ⚠️ QUY TẮC NGUYÊN TẮC BẮT BUỘC CHO VOICETEXT (ĐỂ TTS ĐỌC ĐÚNG):
@@ -175,7 +176,8 @@ TRẢ VỀ DUY NHẤT 1 ĐỐI TƯỢNG JSON ĐÚNG ĐỊNH DẠNG SAU:
       "image": null
     },
     "channel": "Công nghệ 24h",
-    "theme": "light"
+    "theme": "dark",
+    "font": "be-vietnam"
   },
   "voice": {
     "provider": "${cfg.ttsProvider}",

@@ -3,22 +3,11 @@
    WARM EDITORIAL palette — Cream / Gold / Amber / Espresso
    Premium kinetic typography — NO cyan/blue
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Anton&family=Bebas+Neue&family=Playfair+Display:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Lexend:wght@400;500;600;700;800;900&family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body {
-  width: 1080px; height: 1920px; overflow: hidden;
-  background: #0D0B08;
-  font-family: 'Inter', 'Noto Sans', sans-serif;
-}
-
-#stage { position: relative; width: 1080px; height: 1920px; }
-
-/* Default invisible — GSAP timeline sets opacity:1 at scene start */
-.scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; }
-
-/* ── PALETTE TOKENS ─────────────────────────────────────────── */
+/* ── PALETTE & FONT TOKENS ─────────────────────────────────── */
 :root {
   --cream:     #FDF6E3;
   --gold:      #D4820A;
@@ -33,6 +22,32 @@ html, body {
   --text-muted: rgba(28,25,23,0.65);
   --bg-main:   #F7F5F0;
   --scene-num-color: rgba(0,0,0,0.06);
+
+  /* Default Vietnamese Font Family (100% accent support) */
+  --font-main: 'Be Vietnam Pro', 'Montserrat', sans-serif;
+  --font-headline: 'Barlow Condensed', 'Montserrat', 'Be Vietnam Pro', sans-serif;
+}
+
+/* Font Presets (controlled by data-font attribute on #stage) */
+[data-font="be-vietnam"] {
+  --font-main: 'Be Vietnam Pro', sans-serif;
+  --font-headline: 'Be Vietnam Pro', sans-serif;
+}
+[data-font="montserrat"] {
+  --font-main: 'Montserrat', sans-serif;
+  --font-headline: 'Montserrat', sans-serif;
+}
+[data-font="barlow"] {
+  --font-main: 'Barlow Condensed', 'Be Vietnam Pro', sans-serif;
+  --font-headline: 'Barlow Condensed', 'Montserrat', sans-serif;
+}
+[data-font="lexend"] {
+  --font-main: 'Lexend', sans-serif;
+  --font-headline: 'Lexend', sans-serif;
+}
+[data-font="jakarta"] {
+  --font-main: 'Plus Jakarta Sans', sans-serif;
+  --font-headline: 'Plus Jakarta Sans', sans-serif;
 }
 
 [data-theme="dark"] {
@@ -51,11 +66,22 @@ html, body {
   --scene-num-color: rgba(255,255,255,0.07);
 }
 
+html, body {
+  width: 1080px; height: 1920px; overflow: hidden;
+  background: #0D0B08;
+  font-family: var(--font-main);
+}
+
+#stage { position: relative; width: 1080px; height: 1920px; font-family: var(--font-main); }
+
+/* Default invisible — GSAP timeline sets opacity:1 at scene start */
+.scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; }
+
 /* ── BACKGROUND SCENE NUMBER WATERMARK ─────────────────────── */
 .bg-scene-num {
   position: absolute;
   top: 100px; right: 60px;
-  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-family: var(--font-headline);
   font-size: 280px; font-weight: 900;
   color: var(--scene-num-color);
   line-height: 1;
@@ -114,13 +140,13 @@ html, body {
 .brand-text { display: flex; flex-direction: column; gap: 6px; }
 
 .brand-name {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 40px; font-weight: 700; color: var(--cream);
   line-height: 1.1; letter-spacing: -0.01em;
 }
 
 .brand-tag {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 24px; font-weight: 600;
   color: var(--gold);
   letter-spacing: 4px; text-transform: uppercase;
@@ -139,7 +165,7 @@ html, body {
 
 .handle-music { font-size: 30px; color: var(--cream); }
 .handle-text  {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 30px; font-weight: 600; color: var(--cream);
   letter-spacing: -0.01em;
 }
@@ -156,7 +182,7 @@ html, body {
 }
 
 .brand-shell-keyword span {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 26px; font-weight: 600;
   color: var(--gold); letter-spacing: 2px;
 }
@@ -240,7 +266,7 @@ html, body {
 }
 
 .hook-headline {
-  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-family: var(--font-headline);
   font-size: 156px; font-weight: 900;
   color: var(--cream); line-height: 0.95;
   text-align: center; letter-spacing: 0.02em;
@@ -252,7 +278,7 @@ html, body {
 .hook-headline .hl-gold { color: var(--gold); }
 
 .hook-subhead {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 72px; font-weight: 800;
   color: var(--gold); line-height: 1.15;
   text-align: center;
@@ -299,14 +325,14 @@ html, body {
 }
 
 .cmp-label {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 36px; font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 4px;
 }
 
 .cmp-value {
-  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-family: var(--font-headline);
   font-size: 120px; font-weight: 900;
   color: var(--cream); line-height: 1.0;
   letter-spacing: 0.02em;
@@ -315,7 +341,7 @@ html, body {
 .cmp-card.card-winner .cmp-value { color: var(--gold); }
 
 .cmp-winner-badge {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 30px; font-weight: 700;
   color: var(--gold);
   background: rgba(245,166,35,0.15);
@@ -326,7 +352,7 @@ html, body {
 }
 
 .cmp-vs {
-  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-family: var(--font-headline);
   font-size: 72px; font-weight: 900;
   color: rgba(253,246,227,0.25);
   text-align: center; line-height: 1;
@@ -346,7 +372,7 @@ html, body {
 }
 
 .stat-value {
-  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-family: var(--font-headline);
   font-size: 210px; font-weight: 900;
   color: var(--gold); line-height: 1.0;
   letter-spacing: 0.01em;
@@ -356,7 +382,7 @@ html, body {
 }
 
 .stat-label {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 62px; font-weight: 700;
   color: var(--cream); line-height: 1.2;
   text-align: center;
@@ -364,7 +390,7 @@ html, body {
 }
 
 .stat-context {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 42px; font-weight: 500;
   color: var(--text-muted);
   text-align: center;
@@ -394,7 +420,7 @@ html, body {
 }
 
 .feat-title {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 58px; font-weight: 800;
   color: var(--gold); line-height: 1.2;
   margin-bottom: 0;
@@ -429,7 +455,7 @@ html, body {
 }
 
 .feat-text {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 50px; font-weight: 500;
   color: var(--cream); line-height: 1.3;
 }
@@ -456,7 +482,7 @@ html, body {
 
 .callout-tag {
   display: inline-block;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 30px; font-weight: 700;
   color: var(--gold);
   background: rgba(245,166,35,0.12);
@@ -475,7 +501,7 @@ html, body {
 }
 
 .callout-statement {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 62px; font-weight: 700;
   color: var(--cream); line-height: 1.35;
 }
@@ -521,7 +547,7 @@ html, body {
 }
 
 .code-title-main {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 48px; font-weight: 800; color: #F8FAFC;
   padding: 36px 48px 12px; line-height: 1.25;
 }
@@ -562,7 +588,7 @@ html, body {
 }
 
 .bench-title {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 36px; font-weight: 700;
   color: var(--text-muted); letter-spacing: 4px;
   text-transform: uppercase; margin-bottom: 48px;
@@ -592,20 +618,20 @@ html, body {
 
 .bench-scale {
   display: flex; justify-content: space-between;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 26px; font-weight: 600; color: var(--text-muted);
   margin-top: 14px;
 }
 
 .bench-value {
-  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-family: var(--font-headline);
   font-size: 160px; font-weight: 900;
   color: var(--gold); line-height: 1.0;
   margin-bottom: 20px; opacity: 0;
 }
 
 .bench-label {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 52px; font-weight: 700;
   color: var(--text-main); line-height: 1.25;
   opacity: 0;
@@ -613,7 +639,7 @@ html, body {
 
 .bench-context {
   margin-top: 36px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 38px; font-weight: 500;
   color: var(--text-muted);
   background: rgba(212,130,10,0.1);
@@ -633,7 +659,7 @@ html, body {
 }
 
 .grid-title {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 60px; font-weight: 800;
   color: var(--text-main); text-align: center;
   opacity: 0;
@@ -663,7 +689,7 @@ html, body {
 }
 
 .grid-card-label {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 40px; font-weight: 700;
   color: var(--text-main); line-height: 1.2;
 }
@@ -681,7 +707,7 @@ html, body {
 }
 
 .out-cta-top {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 50px; font-weight: 700; color: var(--cream);
   border: 2.5px solid rgba(253,246,227,0.6);
   padding: 18px 56px; border-radius: 50px;
@@ -690,7 +716,7 @@ html, body {
 }
 
 .out-channel {
-  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-family: var(--font-headline);
   font-size: 118px; font-weight: 900;
   color: var(--cream); text-align: center;
   line-height: 1.0; letter-spacing: 0.02em;
@@ -706,7 +732,7 @@ html, body {
 }
 
 .out-source {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 42px; font-weight: 500;
   color: var(--text-muted); text-align: center;
   margin-top: 40px;

@@ -41,7 +41,8 @@ export function composeHtml(args: ComposeArgs): string {
   const tiktok = args.tiktok ?? DEFAULT_TIKTOK;
   const tiktokAvatar = args.tiktokAvatarRelPath ?? "tiktok-avatar.jpg";
   const outroHoldSec = args.outroHoldSec ?? 3;
-  const theme = script.metadata.theme ?? "light";
+  const theme = script.metadata.theme ?? "dark";
+  const font = script.metadata.font ?? "be-vietnam";
 
   // Compute timing per scene. Outro scene gets extra HOLD seconds so the
   // TikTok follow card stays visible after the voice ends.
@@ -72,7 +73,7 @@ export function composeHtml(args: ComposeArgs): string {
   return tpl
     .replace("{{TITLE}}", escapeHtml(script.metadata.title))
     .replace(/\{\{TOTAL_DURATION\}\}/g, totalDuration.toFixed(2))
-    .replace('<div id="stage">', `<div id="stage" data-theme="${escapeHtml(theme)}">`)
+    .replace('id="stage"', `id="stage"\n       data-theme="${escapeHtml(theme)}"\n       data-font="${escapeHtml(font)}"`)
     .replace("{{SHELL}}", shellHtml)
     .replace("{{SCENES}}", sceneHtml)
     .replace(/src="voice\.mp3"/g, `src="${audioRelPath}"`)
@@ -390,15 +391,11 @@ function buildScene(
   layoutName: string,
   innerHtml: string,
 ): string {
-  const iconHtml = scene.sceneIcon && scene.type !== "outro"
-    ? `<span class="scene-icon">${scene.sceneIcon}</span>`
-    : "";
   return `
 <div class="scene clip" id="scene-${scene.id}"
      data-start="${start.toFixed(2)}" data-duration="${duration.toFixed(2)}" data-active="0"
      data-layout="${layoutName}" style="--scene-dur:${duration.toFixed(2)}s">
   <div class="bg-scene-num">${sceneIndexStr}</div>
-  ${iconHtml}
   ${innerHtml}
 </div>`.trim();
 }
