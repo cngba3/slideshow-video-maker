@@ -141,7 +141,7 @@ export const ScriptSchema = z.object({
     }),
     channel: z.string().min(1),
     theme: z.enum(["dark", "light", "finance-gold"]).optional().default("dark"),
-    font: z.enum(["be-vietnam", "montserrat", "lexend", "barlow", "jakarta"]).optional().default("be-vietnam"),
+    font: z.enum(["montserrat", "lexend", "barlow", "jakarta", "be-vietnam"]).optional().default("montserrat"),
   }),
   voice: z.object({
     provider: z.enum(["lucylab", "elevenlabs", "vbee"]),

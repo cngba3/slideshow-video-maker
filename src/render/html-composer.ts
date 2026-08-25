@@ -42,7 +42,7 @@ export function composeHtml(args: ComposeArgs): string {
   const tiktokAvatar = args.tiktokAvatarRelPath ?? "tiktok-avatar.jpg";
   const outroHoldSec = args.outroHoldSec ?? 3;
   const theme = script.metadata.theme ?? "dark";
-  const font = script.metadata.font ?? "be-vietnam";
+  const font = script.metadata.font ?? "montserrat";
 
   // Compute timing per scene. Outro scene gets extra HOLD seconds so the
   // TikTok follow card stays visible after the voice ends.
@@ -88,6 +88,15 @@ function renderShell(metadata: Script["metadata"], tiktok: TiktokConfig): string
   return `
 <!-- Shell: persistent brand elements (no data-start → always visible) -->
 <div class="shell-bg"></div>
+
+<!-- Canva Slide Live Progress Bar -->
+<div id="slide-progress-bar"></div>
+
+<!-- Ambient Glowing Orbs Motion Background -->
+<div class="shell-ambient">
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+</div>
 
 <div class="brand-shell-header">
   <div class="brand-icon">&gt;_</div>

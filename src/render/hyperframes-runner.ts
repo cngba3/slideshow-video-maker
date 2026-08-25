@@ -6,10 +6,11 @@ export interface RenderArgs {
   outputPath: string;      // path for .mp4
   fps?: number;            // default 30
   quality?: "draft" | "standard" | "high"; // default "standard"
+  workers?: number;        // default 4
 }
 
 export async function renderWithHyperframes(args: RenderArgs): Promise<void> {
-  const { compositionDir, outputPath, fps = 30, quality = "standard" } = args;
+  const { compositionDir, outputPath, fps = 30, quality = "standard", workers = 4 } = args;
 
   const spawnArgs = [
     "hyperframes",
@@ -21,6 +22,8 @@ export async function renderWithHyperframes(args: RenderArgs): Promise<void> {
     String(fps),
     "--quality",
     quality,
+    "--workers",
+    String(workers),
   ];
 
   await new Promise<void>((resolve, reject) => {

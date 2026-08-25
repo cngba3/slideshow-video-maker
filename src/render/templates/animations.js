@@ -21,15 +21,38 @@ window.__timelines["news-video"] = tl;
   const stage = document.getElementById("stage");
   const scenes = Array.from(stage.querySelectorAll(".scene"));
 
+  const totalDur = parseFloat(stage.dataset.duration || "60");
+
+  // Canva Slide Live Progress Bar Fill
+  const progressBar = document.getElementById("slide-progress-bar");
+  if (progressBar) {
+    tl.fromTo(progressBar, { width: "0%" }, { width: "100%", duration: totalDur }, 0);
+  }
+
   // ── Scene dispatch ──────────────────────────────────────────────────────
-  scenes.forEach((scene) => {
+  scenes.forEach((scene, idx) => {
     const start  = parseFloat(scene.dataset.start);
     const dur    = parseFloat(scene.dataset.duration);
     const layout = scene.dataset.layout;
 
-    // Scene hard-cut (no fade — faster feel)
-    tl.set(scene, { opacity: 1 }, start);
-    tl.set(scene, { opacity: 0 }, start + dur);
+    // Canva Presentation Slide Transition (Slide-In Push Entrance & Exit)
+    if (idx === 0) {
+      tl.fromTo(scene,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.4 },
+        start
+      );
+    } else {
+      tl.fromTo(scene,
+        { opacity: 0, x: 140, scale: 0.96 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.45 },
+        start
+      );
+    }
+    tl.to(scene,
+      { opacity: 0, x: -100, scale: 0.96, duration: 0.35 },
+      start + dur - 0.35
+    );
 
     // Scene background number entrance
     const bgNum = scene.querySelector(".bg-scene-num");
