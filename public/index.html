@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto News Video Studio — Tạo Video Tin Tức Tự Động 9:16</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dark-theme">
+  <div class="app-layout">
+    <!-- Header Sidebar / Top Navbar -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-icon">
+          <i data-lucide="clapperboard"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Auto News Video</h1>
+          <span class="badge">v2.0 Studio UI</span>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-btn active" data-tab="create">
+          <i data-lucide="sparkles"></i>
+          <span>Tạo Video</span>
+        </button>
+        <button class="nav-btn" data-tab="gallery">
+          <i data-lucide="film"></i>
+          <span>Thư Viện</span>
+        </button>
+        <button class="nav-btn" data-tab="editor">
+          <i data-lucide="edit-3"></i>
+          <span>Sửa Kịch Bản</span>
+        </button>
+      </nav>
+
+      <div class="header-status">
+        <div class="status-indicator" id="statusIndicator">
+          <span class="dot online"></span>
+          <span class="status-text">Gemini 2.5 Sẵn Sàng</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-content">
+      <!-- TAB 1: CREATE VIDEO -->
+      <section id="tab-create" class="tab-pane active">
+        <div class="grid-layout">
+          <!-- Input Form Card -->
+          <div class="glass-card main-form-card">
+            <div class="card-header">
+              <h2><i data-lucide="wand-2"></i> Tạo Video Mới Từ Tin Tức</h2>
+              <p class="subtitle">AI tự động tạo kịch bản, đọc giọng nói tiếng Việt, ghép đồ họa motion & SFX</p>
+            </div>
+
+            <div class="input-tabs">
+              <button class="input-tab-btn active" data-mode="url">
+                <i data-lucide="link"></i> Đường Link Bài Báo (URL)
+              </button>
+              <button class="input-tab-btn" data-mode="text">
+                <i data-lucide="file-text"></i> Dán Văn Bản Thô (.txt)
+              </button>
+            </div>
+
+            <!-- URL Input -->
+            <div id="input-group-url" class="input-group">
+              <label for="inputUrl">Nhập link bài báo (VnExpress, GenK, Tuổi Trẻ, Dân Trí...):</label>
+              <div class="input-with-icon">
+                <i data-lucide="globe"></i>
+                <input type="url" id="inputUrl" placeholder="https://vnexpress.net/san-pham-cong-nghe-moi..." />
+              </div>
+              <small class="hint">Hệ thống sẽ tự bóc tách tiêu đề, nội dung và ảnh đại diện bài viết.</small>
+            </div>
+
+            <!-- Text Input -->
+            <div id="input-group-text" class="input-group hidden">
+              <label for="inputText">Nội dung bài viết / Tin tức:</label>
+              <textarea id="inputText" rows="7" placeholder="Dán nội dung tin tức hoặc bài viết tiếng Việt tại đây... (Dòng đầu tiên làm tiêu đề)"></textarea>
+              <small class="hint">Độ dài khuyến nghị từ 300 - 1500 từ.</small>
+            </div>
+
+            <button id="btnCreateVideo" class="btn btn-primary btn-lg btn-block">
+              <i data-lucide="play-circle"></i>
+              <span>Tạo Video Tự Động</span>
+            </button>
+          </div>
+
+          <!-- Live Progress & Console Log Card -->
+          <div class="glass-card console-card">
+            <div class="card-header">
+              <h2><i data-lucide="terminal"></i> Tiến Trình Xử Lý Real-time</h2>
+              <span id="jobStatusBadge" class="badge-status idle">Đang chờ lệnh</span>
+            </div>
+
+            <!-- 8 Steps Stepper -->
+            <div class="stepper-container" id="stepper">
+              <div class="step-item" data-step="1">
+                <div class="step-num">1</div>
+                <div class="step-label">Load & Validate</div>
+              </div>
+              <div class="step-item" data-step="2">
+                <div class="step-num">2</div>
+                <div class="step-label">Script.txt</div>
+              </div>
+              <div class="step-item" data-step="3">
+                <div class="step-num">3</div>
+                <div class="step-label">Fetch Image</div>
+              </div>
+              <div class="step-item" data-step="4">
+                <div class="step-num">4</div>
+                <div class="step-label">TTS Voice</div>
+              </div>
+              <div class="step-item" data-step="5">
+                <div class="step-num">5</div>
+                <div class="step-label">Mix SFX</div>
+              </div>
+              <div class="step-item" data-step="6">
+                <div class="step-num">6</div>
+                <div class="step-label">HTML Compose</div>
+              </div>
+              <div class="step-item" data-step="7">
+                <div class="step-num">7</div>
+                <div class="step-label">HyperFrames</div>
+              </div>
+              <div class="step-item" data-step="8">
+                <div class="step-num">8</div>
+                <div class="step-label">Hoàn Thành</div>
+              </div>
+            </div>
+
+            <!-- Terminal Console Window -->
+            <div class="terminal-window" id="terminalLog">
+              <div class="log-line info">[System] Sẵn sàng tạo video mới. Hãy nhập URL/Văn bản và nhấn "Tạo Video Tự Động".</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Preview Drawer / Container (shows up when video is completed) -->
+        <div id="resultCard" class="glass-card result-card hidden">
+          <div class="result-layout">
+            <!-- 9:16 Video Player Frame -->
+            <div class="video-preview-wrapper">
+              <div class="mobile-frame">
+                <video id="resultVideoPlayer" controls autoplay loop playsinline></video>
+              </div>
+            </div>
+
+            <!-- Result Details & Download Links -->
+            <div class="result-info">
+              <div class="success-badge"><i data-lucide="check-circle-2"></i> Đã Dựng Video Thành Công!</div>
+              <h3 id="resultTitle">Tiêu đề video</h3>
+              <p class="result-meta" id="resultMeta">Thời lượng: -- | 9:16 Short News | 1080x1920</p>
+
+              <div class="download-actions">
+                <a id="btnDownloadVideo" class="btn btn-primary" download target="_blank">
+                  <i data-lucide="download"></i> Tải Video.mp4
+                </a>
+                <a id="btnDownloadAudio" class="btn btn-secondary" download target="_blank">
+                  <i data-lucide="music"></i> Tải Voice.mp3 (CapCut)
+                </a>
+                <a id="btnDownloadScript" class="btn btn-outline" download target="_blank">
+                  <i data-lucide="file-text"></i> Tải Script.txt
+                </a>
+                <button id="btnEditCurrentScript" class="btn btn-glass">
+                  <i data-lucide="edit-3"></i> Chỉnh Sửa Kịch Bản
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: GALLERY -->
+      <section id="tab-gallery" class="tab-pane hidden">
+        <div class="section-header">
+          <div>
+            <h2><i data-lucide="film"></i> Thư Viện Video Đã Dựng</h2>
+            <p class="subtitle">Quản lý và xem lại danh sách tất cả các video 9:16 đã tạo trong thư mục output</p>
+          </div>
+          <button id="btnRefreshGallery" class="btn btn-secondary">
+            <i data-lucide="rotate-cw"></i> Làm Mới
+          </button>
+        </div>
+
+        <div id="galleryGrid" class="gallery-grid">
+          <!-- Dynamically populated video cards -->
+        </div>
+      </section>
+
+      <!-- TAB 3: SCRIPT EDITOR -->
+      <section id="tab-editor" class="tab-pane hidden">
+        <div class="section-header">
+          <div>
+            <h2><i data-lucide="edit-3"></i> Biên Tập & Render Lại Kịch Bản</h2>
+            <p class="subtitle">Chỉnh sửa lời thoại (voiceText), tiêu đề và dạng hiển thị cho từng Scene</p>
+          </div>
+          <div class="editor-top-actions">
+            <select id="editorProjectSelect" class="form-select">
+              <option value="">-- Chọn Video Để Sửa --</option>
+            </select>
+            <button id="btnSaveAndRerender" class="btn btn-primary">
+              <i data-lucide="refresh-cw"></i> Lưu & Render Lại Video
+            </button>
+          </div>
+        </div>
+
+        <div id="editorContent" class="editor-container hidden">
+          <div class="meta-editor-card glass-card">
+            <h3>Thông tin chung</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Tiêu đề bài viết</label>
+                <input type="text" id="editMetaTitle" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Nguồn tin</label>
+                <input type="text" id="editMetaDomain" class="form-input" />
+              </div>
+            </div>
+          </div>
+
+          <h3>Danh sách các cảnh (Scenes)</h3>
+          <div id="sceneListContainer" class="scene-list-container">
+            <!-- Scene Editor Cards -->
+          </div>
+        </div>
+
+        <div id="editorEmptyState" class="empty-state">
+          <i data-lucide="file-edit"></i>
+          <p>Vui lòng chọn một video từ danh sách phía trên để bắt đầu chỉnh sửa kịch bản.</p>
+        </div>
+      </section>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- Video Preview Modal for Gallery -->
+  <div id="videoModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="btnCloseModal"><i data-lucide="x"></i></button>
+      <div class="mobile-frame">
+        <video id="modalVideoPlayer" controls autoplay loop playsinline></video>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

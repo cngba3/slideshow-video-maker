@@ -1,0 +1,30 @@
+# Environment & secret files
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Agent directories & internal workflows
+.agent/
+.agents/
+
+# Dependencies & Build output
+node_modules/
+dist/
+output/
+scratch/
+
+# Logs & OS metadata
+*.log
+.DS_Store
+Thumbs.db
+
+# Debug scripts & temporary files
+debug-*.ts
+scratch-*.ts
+
+# Big SFX library (downloaded via script — too large for git)
+SFX/
+
