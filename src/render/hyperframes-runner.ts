@@ -14,7 +14,7 @@ export async function renderWithHyperframes(args: RenderArgs): Promise<void> {
   const cpus = os.cpus().length;
   // Default to min(8, cpus - 2) with a floor of 4 to maximize CPU parallelism without overwhelming system memory
   const defaultWorkers = Math.max(4, Math.min(8, cpus > 4 ? cpus - 2 : cpus));
-  const { compositionDir, outputPath, fps = 30, quality = "standard", workers = defaultWorkers } = args;
+  const { compositionDir, outputPath, fps = 24, quality = "draft", workers = defaultWorkers } = args;
 
   const spawnArgs = [
     "hyperframes",
@@ -28,6 +28,7 @@ export async function renderWithHyperframes(args: RenderArgs): Promise<void> {
     quality,
     "--workers",
     String(workers),
+    "--gpu",
   ];
 
   await new Promise<void>((resolve, reject) => {
