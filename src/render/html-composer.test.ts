@@ -95,7 +95,7 @@ describe("composeHtml", () => {
       audioRelPath: "voice.mp3",
     });
     // Hook scene with bgSrc but no bgImageRelPath → gradient fallback
-    expect(html).toContain('class="bg gradient-news-dark"');
+    expect(html).toContain('class="bg gradient-news-light"');
     expect(html).not.toContain("background-image: url");
   });
 

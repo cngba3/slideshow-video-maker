@@ -40,8 +40,8 @@ export function composeHtml(args: ComposeArgs): string {
   const { script, sceneAudio, gapSec, bgImageRelPath = null, audioRelPath } = args;
   const tiktok = args.tiktok ?? DEFAULT_TIKTOK;
   const tiktokAvatar = args.tiktokAvatarRelPath ?? "tiktok-avatar.jpg";
-  const outroHoldSec = args.outroHoldSec ?? 3;
-  const theme = script.metadata.theme ?? "dark";
+  const outroHoldSec = args.outroHoldSec ?? 0;
+  const theme = script.metadata.theme ?? "light";
   const font = script.metadata.font ?? "montserrat";
 
   // Compute timing per scene. Outro scene gets extra HOLD seconds so the
@@ -127,6 +127,7 @@ function renderScene(
   bgImageRelPath: string | null,
   tiktok: TiktokConfig,
   tiktokAvatarRelPath: string,
+  theme: string = "light",
 ): string {
   const td = scene.templateData;
 
@@ -135,7 +136,7 @@ function renderScene(
 
   switch (td.template) {
     case "hook":
-      inner = renderHookInner(td, bgImageRelPath);
+      inner = renderHookInner(td, bgImageRelPath, theme);
       layoutName = "hook";
       break;
     case "comparison":
@@ -185,17 +186,18 @@ function renderBodyInner(contentHtml: string): string {
 }
 
 // ── HOOK SCENE ─────────────────────────────────────────────────────────────
-function renderHookInner(td: Extract<TemplateDataType, { template: "hook" }>, bgImageRelPath: string | null): string {
-  // Background
+function renderHookInner(td: Extract<TemplateDataType, { template: "hook" }>, bgImageRelPath: string | null, theme: string = "light"): string {
+  const isLight = theme === "light";
   let bgHtml: string;
+  let overlayHtml: string;
   if (td.bgSrc && bgImageRelPath) {
-    // Ken Burns image
     const kbClass = td.kenBurns ?? "zoom-in";
     bgHtml = `<div class="bg kb-${kbClass}" style="background-image: url('${bgImageRelPath}')"></div>`;
+    overlayHtml = isLight ? `<div class="overlay" style="opacity: 0.15"></div>` : `<div class="overlay" style="opacity: 0.60"></div>`;
   } else {
-    bgHtml = `<div class="bg gradient-news-dark"></div>`;
+    bgHtml = isLight ? `<div class="bg gradient-news-light"></div>` : `<div class="bg gradient-news-dark"></div>`;
+    overlayHtml = isLight ? "" : `<div class="overlay" style="opacity: 0.60"></div>`;
   }
-  const overlayHtml = `<div class="overlay" style="opacity: 0.60"></div>`;
 
   const headline = escapeHtml(td.headline);
   const subhead = td.subhead ? escapeHtml(td.subhead) : "";

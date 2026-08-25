@@ -140,8 +140,8 @@ export const ScriptSchema = z.object({
       image: z.string().url().nullable(),
     }),
     channel: z.string().min(1),
-    theme: z.enum(["dark", "light", "finance-gold"]).optional().default("dark"),
-    font: z.enum(["montserrat", "lexend", "barlow", "jakarta", "be-vietnam"]).optional().default("montserrat"),
+    theme: z.enum(["light", "dark", "finance-gold"]).optional().default("light"),
+    font: z.enum(["montserrat", "jakarta", "lexend", "barlow", "be-vietnam", "times-new-roman"]).optional().default("montserrat"),
   }),
   voice: z.object({
     provider: z.enum(["lucylab", "elevenlabs", "vbee"]),
@@ -150,15 +150,11 @@ export const ScriptSchema = z.object({
   }),
   scenes: z
     .array(Scene)
-    .min(5)
+    .min(4, "scenes must have at least 4 items")
     .max(8, "scenes must have at most 8 items")
     .refine(
       (s) => s[0]?.type === "hook",
       { message: "scenes[0] must be type=hook" }
-    )
-    .refine(
-      (s) => s[s.length - 1]?.type === "outro",
-      { message: "last scene must be type=outro" }
     ),
 });
 

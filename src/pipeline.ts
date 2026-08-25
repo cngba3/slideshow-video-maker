@@ -19,11 +19,9 @@ const DURATION_MAX_SEC = 72;
 const SCENE_GAP_SEC = 0.3;
 /**
  * Extra seconds added to the outro scene visual duration AFTER the voice ends.
- * Gives the TikTok follow card time to be read by the viewer (otherwise the
- * video ends a few hundred ms after the card slides up + click animation).
- * Audio stays silent during this hold; visual stays on screen.
+ * Set to 0 so the video finishes immediately when speech ends.
  */
-const OUTRO_HOLD_SEC = 3;
+const OUTRO_HOLD_SEC = 0;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TPL_DIR = join(__dirname, "render", "templates");

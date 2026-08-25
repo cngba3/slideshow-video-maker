@@ -27,9 +27,15 @@ describe("ScriptSchema", () => {
     expect(() => ScriptSchema.parse(load("invalid-line-too-long.json"))).toThrow(/40/);
   });
 
-  it("requires hook + outro present", () => {
+  it("supports scripts without an outro scene", () => {
     const data = load("sample-script-with-image.json");
     data.scenes = data.scenes.filter((s: any) => s.type !== "outro");
-    expect(() => ScriptSchema.parse(data)).toThrow(/outro/);
+    expect(() => ScriptSchema.parse(data)).not.toThrow();
+  });
+
+  it("requires first scene to be type=hook", () => {
+    const data = load("sample-script-with-image.json");
+    data.scenes[0].type = "body";
+    expect(() => ScriptSchema.parse(data)).toThrow(/hook/);
   });
 });

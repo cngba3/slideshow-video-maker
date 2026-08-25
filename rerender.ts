@@ -127,7 +127,7 @@ async function main() {
     audioRelPath: "voice.mp3",
     tiktok: cfg.tiktok,
     tiktokAvatarRelPath: ttAvatarFile,
-    outroHoldSec: 3,
+    outroHoldSec: 0,
   });
   await writeFile(join(outputDir, "index.html"), html);
   await writeFile(join(outputDir, "hyperframes.json"), JSON.stringify(HYPERFRAMES_CONFIG, null, 2));

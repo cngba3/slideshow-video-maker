@@ -45,6 +45,7 @@ export class VbeeClient implements TtsClient {
         const payload: Record<string, unknown> = {
           input_text: text,
           voice_code: this.cfg.voiceCode,
+          callbackUrl: "https://example.com/callback",
           callback_url: "https://example.com/callback",
         };
 
@@ -71,7 +72,7 @@ export class VbeeClient implements TtsClient {
           return;
         }
 
-        // Case B: JSON returned containing audio URL
+        // Case B: JSON returned containing audio URL or polling request_id
         const jsonText = dataBuffer.toString("utf8");
         const parsed = JSON.parse(jsonText);
 
@@ -86,8 +87,9 @@ export class VbeeClient implements TtsClient {
         const requestId = parsed?.result?.request_id || parsed?.request_id;
 
         if (!audioUrl && requestId) {
-          const pollUrl = `https://vbee.vn/api/v1/tts/${requestId}`;
-          for (let pollAttempt = 0; pollAttempt < 15; pollAttempt++) {
+          const pollBase = this.cfg.endpoint.replace(/\/+$/, "");
+          const pollUrl = `${pollBase}/${requestId}`;
+          for (let pollAttempt = 0; pollAttempt < 20; pollAttempt++) {
             await sleep(1500);
             try {
               const pollResp = await axios.get(pollUrl, { headers, timeout: 10000 });
