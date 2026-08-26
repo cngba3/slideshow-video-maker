@@ -28,7 +28,6 @@ export async function renderWithHyperframes(args: RenderArgs): Promise<void> {
     quality,
     "--workers",
     String(workers),
-    "--gpu",
   ];
 
   await new Promise<void>((resolve, reject) => {
